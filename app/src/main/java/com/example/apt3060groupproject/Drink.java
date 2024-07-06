@@ -1,9 +1,10 @@
 package com.example.apt3060groupproject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Drink {
+public class Drink implements Serializable {
     String drink_name,brand;
     int imageResId;
     Map<String, Double> sizePriceMap;

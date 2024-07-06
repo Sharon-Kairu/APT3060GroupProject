@@ -1,5 +1,7 @@
 package com.example.apt3060groupproject;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,14 +11,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import java.util.List;
 
 public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksViewHolder> {
     private final List<Drink> drinksList;
     private final OnDrinkClickListener onDrinkClickListener;
 
-    public DrinksAdapter(List<Drink> drinksList, OnDrinkClickListener onDrinkClickListener) {
+    private Context context;
+
+    public DrinksAdapter(Context context, List<Drink> drinksList, OnDrinkClickListener onDrinkClickListener) {
+        this.context = context;
         this.drinksList = drinksList;
         this.onDrinkClickListener = onDrinkClickListener;
     }
@@ -24,7 +28,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksView
     @NonNull
     @Override
     public DrinksViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.drink_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.drink_item, parent, false);
         return new DrinksViewHolder(view);
     }
 
@@ -50,8 +54,7 @@ public class DrinksAdapter extends RecyclerView.Adapter<DrinksAdapter.DrinksView
         public DrinksViewHolder(@NonNull View itemView) {
             super(itemView);
             drinkNameTextView = itemView.findViewById(R.id.drink_name);
-            drinkImageImageView=itemView.findViewById(R.id.drink_image);
-
+            drinkImageImageView = itemView.findViewById(R.id.drink_image);
         }
     }
 
