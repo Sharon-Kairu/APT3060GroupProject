@@ -12,7 +12,7 @@
         android:layout_width="349dp"
         android:layout_height="266dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -36,7 +36,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="354dp"
+        android:layout_height="454dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="-5dp"
         android:background="@drawable/selectionbg"
@@ -63,6 +63,30 @@
             android:layout_marginBottom="30dp"
             android:padding="20dp" />
 
+        <Button
+            android:id="@+id/increase"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="+" />
+
+        <TextView
+            android:id="@+id/quantity"
+            android:layout_width="100dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="-30dp"
+            android:text="1"
+            android:textAlignment="center"
+            android:textColorHint="@color/white" />
+
+        <Button
+            android:id="@+id/decrease"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="270dp"
+            android:layout_marginTop="-45dp"
+            android:text="-" />
+
         <TextView
             android:id="@+id/textView9"
             android:layout_width="200dp"
@@ -88,6 +112,7 @@
             android:layout_marginLeft="80dp"
             android:layout_marginTop="30dp"
             android:text="Add to cart" />
+
     </LinearLayout>
 
 

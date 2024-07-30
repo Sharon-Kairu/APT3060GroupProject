@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "323495342653",
+    "project_id": "apt3060-group-project",
+    "storage_bucket": "apt3060-group-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:323495342653:android:c79c1a601a40c4201b7054",
+        "android_client_info": {
+          "package_name": "com.example.apt3060groupproject"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYRXZn-E4lwdBlB-TWDejbZTA7xpURe9M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

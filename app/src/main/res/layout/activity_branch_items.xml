@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/green">
+
+    <TextView
+        android:id="@+id/branchIdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="110dp"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:text="Branch ID: " />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_orders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/branchIdTextView"
+        android:layout_margin="16dp"
+        android:padding="16dp" />
+
+</RelativeLayout>

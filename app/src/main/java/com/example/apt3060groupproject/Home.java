@@ -11,13 +11,21 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Home extends AppCompatActivity {
     RecyclerView branches;
-    List<Branch> branchlist;
+    List<Branch> branchList;
     BranchAdapter branchAdapter;
+    FirebaseFirestore db;
+
+    private String userId; // Add a field to store the user ID
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,28 +37,58 @@ public class Home extends AppCompatActivity {
             return insets;
         });
 
+        // Initialize FirebaseFirestore
+        db = FirebaseFirestore.getInstance();
+
+        // Get the user ID from the intent extras
+        userId = getIntent().getStringExtra("USER_ID");
+
         branches = findViewById(R.id.branches);
         branches.setLayoutManager(new LinearLayoutManager(this));
 
-        branchlist = getbranchlist();
-        branchAdapter=new BranchAdapter(branchlist, this::onBranchClick);
+        branchList = getBranchList();
+        branchAdapter = new BranchAdapter(branchList, this::onBranchClick);
         branches.setAdapter(branchAdapter);
 
+        // Add branch data to Firestore
+        addBranchesToFirestore();
     }
 
-        List<Branch> getbranchlist(){
-            List<Branch> branches=new ArrayList<>();
-            branches.add(new Branch("Headquarter" ,"Nairobi"));
-            branches.add(new Branch("Branch One","Kisumu"));
-            branches.add(new Branch("Branch two","Nakuru"));
-            branches.add(new Branch("Branch Three", "Naivasha"));
-            return branches;
-
-
+    List<Branch> getBranchList() {
+        List<Branch> branches = new ArrayList<>();
+        branches.add(new Branch("headquarter", "Headquarter", "Nairobi"));
+        branches.add(new Branch("branch_1", "Branch One", "Kisumu"));
+        branches.add(new Branch("branch_2", "Branch Two", "Nakuru"));
+        branches.add(new Branch("branch_3", "Branch Three", "Naivasha"));
+        return branches;
     }
 
-    void onBranchClick(Branch branch){
-        Intent intent=new Intent(Home.this,Drinks.class);
+    private void addBranchesToFirestore() {
+        for (Branch branch : branchList) {
+            Map<String, String> branchData = new HashMap<>();
+            branchData.put("name", branch.getName());
+            branchData.put("location", branch.getLocation()); // Assuming Branch class has a location field
+
+            db.collection("branches")
+                    .document(branch.getId())
+                    .set(branchData)
+                    .addOnSuccessListener(aVoid -> {
+                        // Handle success if needed
+                        System.out.println("Branch added/updated successfully: " + branch.getId());
+                    })
+                    .addOnFailureListener(e -> {
+                        // Handle error
+                        System.err.println("Error adding/updating branch: " + e.getMessage());
+                    });
+        }
+    }
+
+    void onBranchClick(Branch branch) {
+        // Navigate to Drinks activity
+        Intent intent = new Intent(Home.this, Drinks.class);
+        intent.putExtra("selectedBranchID", branch.getId());
+        intent.putExtra("selectedBranchName", branch.getName());
+        intent.putExtra("USER_ID", userId); // Pass the user ID to the Drinks activity
         startActivity(intent);
     }
 }

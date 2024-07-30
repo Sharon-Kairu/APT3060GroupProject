@@ -3,6 +3,7 @@ package com.example.apt3060groupproject;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +23,11 @@ public class Drinks extends AppCompatActivity implements DrinksAdapter.OnDrinkCl
     List<Drink> drinksList;
     DrinksAdapter drinksAdapter;
 
+    // Declare variables for branch information
+    private String selectedBranchId;
+    private String selectedBranchName;
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,17 @@ public class Drinks extends AppCompatActivity implements DrinksAdapter.OnDrinkCl
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Retrieve branch details from Intent extras
+        Intent intent = getIntent();
+        selectedBranchId = intent.getStringExtra("selectedBranchID");
+        selectedBranchName = intent.getStringExtra("selectedBranchName");
+        userId = intent.getStringExtra("USER_ID");
+
+
+       TextView branchNameTextView = findViewById(R.id.branchNameTextview);
+       branchNameTextView.setText(selectedBranchName);
+
         drinks = findViewById(R.id.drinks);
         drinks.setLayoutManager(new LinearLayoutManager(this));
 
@@ -39,11 +56,13 @@ public class Drinks extends AppCompatActivity implements DrinksAdapter.OnDrinkCl
         drinksAdapter = new DrinksAdapter(this, drinksList, this);
         drinks.setAdapter(drinksAdapter);
 
-        cart=findViewById(R.id.cart);
+        cart = findViewById(R.id.cart);
 
         cart.setOnClickListener(v -> {
-            Intent intent=new Intent(Drinks.this,Cart.class);
-            startActivity(intent);
+            Intent cartintent = new Intent(Drinks.this, Cart.class);
+            cartintent.putExtra("userId", userId);
+            cartintent.putExtra("selectedBranchID", selectedBranchId);
+            startActivity(cartintent);
         });
     }
 
@@ -103,8 +122,13 @@ public class Drinks extends AppCompatActivity implements DrinksAdapter.OnDrinkCl
 
     @Override
     public void onDrinkClick(Drink drink) {
+        // Create an intent to start the Selection activity
         Intent intent = new Intent(this, Selection.class);
-        intent.putExtra("DRINK", drink);
+
+        intent.putExtra("selectedBranchID", selectedBranchId); // Pass the branch ID
+        intent.putExtra("selectedBranchName", selectedBranchName); // Pass the branch name
+        intent.putExtra("DRINK", drink); // Pass the selected drink
+
         startActivity(intent);
     }
 }
